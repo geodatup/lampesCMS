@@ -1,0 +1,193 @@
+{% extends "base.html" %}
+{% load cms_tags sekizai_tags staticfiles thumbnail show_lampe %}
+
+{% block meta %} 
+<meta property="og:url"                content="{{ lampe.get_absolute_url }}" />
+<meta property="og:type"               content="Lampe Insolite Vintage" />
+<meta property="og:title"              content="{{ lampe }} " />
+<meta property="og:description"        content="{{ lampe.description }}" />
+<meta property="og:image"              content="https://css3gen.com/wp-content/uploads/2015/01/CSS3gencom1a1-e1420522674535.jpg" />
+
+{% endblock meta %} 
+
+
+{% block content %}
+
+<div id="" class="center w80 ptl">
+	{% block header %}
+	{% endblock header %}
+   	<div class="bgdark grid-3 mtl mbs">		    
+		    <!-- vignette et galerie photo -->	
+				<div class="one-fifth flex-item-center ">
+			       		{% for photo in lampe.photos.all %}			    	
+				    		{% thumbnail photo.photo '200x200' crop subject_location=photo.photo.subject_location as photoThumb %}
+				    		{% if forloop.first %}				    		
+            				   <a href="{{ photo.photo.url }}" 
+            				   data-lightbox="{{lampe}}{{forloop.parentloop.counter}}" 
+            				   data-title="<a href={{ lampe.get_absolute_url }}>Cliquer ici pour voir en détail</a>"> 
+						    	<img src="{{ photoThumb.url }}"  alt="">					    	
+						       </a> 
+
+						    <div class="grid-3 mas">
+						     	<li class="fa fa-arrows-v">{{lampe.hauteur }}</li>
+						     	<li class="fr fa fa-arrows-h">{{lampe.largeur_socle }}</li>
+						 		<li class="fr fa fa-circle-o-notch">{{lampe.diametre}}</li>
+						 	</div>
+						 	<div class="grid">
+
+						 		<a class="mas" href="#popup1">
+						 			<li class="fa fa-map-marker" > {{lampe.localisation.ville}}</li>
+						 		</a>
+						 		{% include "mappopup.html" %}
+						 	</div>
+
+						    {% else %}    					    
+						    <a href="{{ photo.photo.url }}" 
+						    data-lightbox="{{lampe}}{{forloop.parentloop.counter}}" 
+						    data-title="<a href={{ lampe.get_absolute_url }}>Cliquer ici pour voir en détail</a>">
+						    </a>                  
+        					{% endif %}
+						{% endfor %}
+				</div>				
+			<!-- FIN vignette et galerie photo --> 
+
+			<!-- details lampe --> 			
+				<div class="two-thirds mrl">					
+					<div class="mts"><h2 >{{lampe.nom }}</h2>
+
+					</div>
+					<div class="small">
+						{{lampe.description}}
+					</div>
+					<div class="bordure mts"></div>
+
+					<div class="grid-2 small">
+
+						<div class="grid-3" >
+							<div class="flex-container-v one-quarter">
+								<div class="flex-item-center">						
+									<li class="fa fa-wrench"></li>
+								</div>
+							</div>
+							<div class="two-thirds flex-vertical-center">
+								<p>{{lampe.materiaux }}</p>
+							</div>
+							<div class="flex-container-v one-quarter">
+								<div class="flex-item-center">						
+									<li class="fa fa-lightbulb-o"></li>
+								</div>
+							</div>
+							<div class="two-thirds flex-vertical-center">
+								{{lampe.ampoule }}
+							</div>
+						</div>
+						<div class="grid-3">
+							<div class="flex-container-v one-quarter">
+								<div class="flex-item-center">						
+									<li class="fa fa-vine"></li>
+								</div>
+							</div>
+							<div class="two-thirds flex-vertical-center">
+								{{lampe.cable }}
+							</div>
+							<div class="flex-container-v one-quarter">
+								<div class="flex-item-center">						
+									<li class="fa fa-plug"></li>
+								</div>
+							</div>
+							<div class="two-thirds flex-vertical-center">
+								<p>{{lampe.electrification }}</p>
+							</div>
+						</div>
+					</div>
+				</div>					
+			<!-- FIN details lampe --> 
+			<!-- Side link -->
+			 <div class="flex-container flex-item-center">
+				<div class="fb-like flex-item-center" 
+                    data-href="{{ lampe.get_absolute_url }}" 
+                    data-layout="button" 
+                    data-action="like" 
+                    data-size="small"
+                    data-share="true">                            
+           		</div>
+            </div>
+            
+			<!-- END Side link -->
+
+			<!-- lampes similaires --> 	
+				<div class="full">
+					<div class="bordure mts"></div>
+					<div class="small">
+						<span><h3 class="txtcenter">Les lampes similaires</h3></span>
+					</div>
+
+					<div class="grid-3 ">
+
+					{% for groupe in lampe.groupe.all %}
+					
+						{% for similarlampes in groupe.lampes.all|slice:":5" %}						
+
+						{% if lampe == similarlampes %}
+						{% else %}	
+						<div class="one-sixth mas flex-horizontal-center">
+
+							{% for photo in similarlampes.photos.all %}
+
+				    			{% thumbnail photo.photo '80x80' crop subject_location=photo.photo.subject_location as photoThumb %}
+				    		
+				    			{% if forloop.first %}
+				    			<a href="{{ photo.photo.url }}" 
+				    			data-lightbox="{{similarlampes}}_similar{{lampe}}_{{forloop.parentloop.counter}}" 
+				    			data-title="<a href={{ similarlampes.get_absolute_url }}>Cliquer ici pour voir en détail</a>"
+				    			class="hovershadowhalo">
+								<img src="{{ photoThumb.url }}" alt="">
+								</a> 
+							
+						    	{% else %}					    
+						    	<a href="{{ photo.photo.url }}" 
+						    	data-lightbox="{{similarlampes}}_similar{{lampe}}_{{forloop.parentloop.counter}}" 
+						    	data-title="<a href={{ similarlampes.get_absolute_url }}>Cliquer ici pour voir en détail</a>">
+						    	</a> 
+						    	{% endif %}
+        					{% endfor %}
+
+        				</div>
+
+						{% endif %}
+        				{% endfor %}					
+						
+						{% if forloop.last %}
+							<!-- on ferme la div de la premiere boucle -->
+						</div> 
+
+							{% if groupe.lampes.all > 5 %}
+								<a href="" class="flex-item-center"> en voir d'autres ... </a>
+							{% else %}        
+        					{% endif %}
+       					{% else %}        
+        				{% endif %}	 	
+		    		{% endfor%}
+				</div>
+			<!--  FIN lampes similaires -->
+
+
+		</div>
+
+{% show_lampe_index lampe.slug %}
+
+</div>
+{% endblock content %}
+
+{% block body_js %}
+{{ block.super }}
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v2.5";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+</script>
+
+{% endblock body_js %}

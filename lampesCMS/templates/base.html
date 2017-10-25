@@ -1,0 +1,31 @@
+{% load cms_tags menu_tags sekizai_tags staticfiles %}
+<!doctype html>
+<html>
+    <head>
+        <title>{% block title %}{% endblock title %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+        <link rel="stylesheet" type="text/css" href= "{% static "lightbox/css/lightbox.css" %}">
+        <link rel="stylesheet" type="text/css" href= "{% static "css/knacss.css" %}">
+        <link rel="stylesheet" type="text/css" href= "{% static "css/font-awesome.min.css" %}">
+        <link rel="stylesheet" type="text/css" href= "{% static "css/animate.min.css" %}">     
+        <link rel="stylesheet" type="text/css" href= "{% static "css/style.css" %}">
+
+        
+        {% render_block "css" %}
+        
+    </head>
+    <body>
+        {% cms_toolbar %}
+        <div class="wauto" >
+            <ul class="nav pin-right pam ">
+                        {% show_menu 0 100 100 100 %}
+            </ul>
+            {% block content %}{% endblock content %}
+        </div>
+
+        {% block body_js %}
+        <script src="{% static "lightbox/js/lightbox-plus-jquery.min.js"%}" async></script>
+        {% endblock body_js %}
+        {% render_block "js" %}
+    </body>
+</html>

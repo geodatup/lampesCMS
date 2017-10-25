@@ -1,0 +1,40 @@
+{% load thumbnail  %}
+
+{% if latest_lampe_list %}	
+<div class="bgdark grid-5 has-gutter mtl mbs">		    
+	    {% for lampe in latest_lampe_list %}  
+		    
+
+		    <!-- vignette et galerie photo -->	
+				<div class="mas">
+			       		{% for photo in lampe.photos.all %}			    	
+				    		{% thumbnail photo.photo '180x180' crop subject_location=photo.photo.subject_location as photoThumb %}
+				    		{% if forloop.first %}				    		
+            				   <a href="{{ photo.photo.url }}" 
+            				   data-lightbox="{{lampe}}{{forloop.parentloop.counter}}" 
+            				   data-title="<a href={{ lampe.get_absolute_url }}>Cliquer ici pour voir en détail</a>"> 
+						    	<img src="{{ photoThumb.url }}"  alt="">					    	
+						       </a> 
+
+						    <div class="small">
+						    	 	{{lampe.nom}} 
+						 	</div>
+						 		
+						 	
+						 	{% else %}    					    
+						    <a href="{{ photo.photo.url }}" 
+						    data-lightbox="{{lampe}}{{forloop.parentloop.counter}}" 
+						    data-title="<a href={{ lampe.get_absolute_url }}>Cliquer ici pour voir en détail</a>">
+						    </a>                  
+        					{% endif %}
+						{% endfor %}
+				</div>				
+			<!-- FIN vignette et galerie photo --> 
+
+			
+
+	    {% endfor %}
+ </div>
+	{% else %}
+	    <p>Aucune lampe n'existe.</p>
+	{% endif %}

@@ -1,0 +1,10 @@
+{% load cms_tags sekizai_tags staticfiles  show_lampe %}
+
+{% block content %}
+<section id="go" class="center w80">
+	{% block header %}
+	{% endblock header %}
+	{% show_lampe_index "/" %}
+
+</section>
+{% endblock content %}

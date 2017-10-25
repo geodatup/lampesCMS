@@ -1,0 +1,87 @@
+<div id="popup1" class="overlay">
+	<div class="popup">
+		<h2>{{lampe.nom}}</h2>
+		<h3>En dépôt chez : {{lampe.localisation.nom}}</h3>
+		<p>{{lampe.localisation.ville}} - <p>{{lampe.localisation.adresse}}</p></p>
+		<a class="close" href="#">&times;</a>
+		<div class="content">
+			<div id="map" class="map"></div>
+		</div>
+	</div>
+</div>
+
+{% block body_js %}
+<script src="https://openlayers.org/en/v4.4.2/build/ol.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+var geojsonObject = {
+        'type': 'FeatureCollection',
+        'crs': {
+          'type': 'name',
+          'properties': {
+            'name': 'EPSG:4326'
+          }
+        },
+        'features': [{
+          'type': 'Feature',
+          'geometry': {
+            'type': 'GeometryCollection',
+            'geometries': [
+            {{lampe.localisation.geolocalisation.geojson|safe}}
+            ]
+          }
+        }]
+        }
+var geojsonFeature = [{{lampe.localisation.geolocalisation.geojson|safe}}]
+
+var vectorSource = new ol.source.Vector({
+	features: (new ol.format.GeoJSON()).readFeatures(geojsonObject, { 
+dataProjection: 'EPSG:4326',
+featureProjection:'EPSG:3857' })
+});
+
+var vectorStyle = new ol.style.Style({
+        image: new ol.style.Icon(({
+            anchor: [0.5, 40],
+            anchorXUnits: 'fraction',
+            anchorYUnits: 'pixels',
+            src: 'https://unpkg.com/leaflet@1.2.0/dist/images/marker-icon.png'
+        }))
+    })
+
+var vectorLayer = new ol.layer.Vector({
+        source: vectorSource,
+        style: vectorStyle
+});
+
+var layers = [
+        new ol.layer.Tile({
+          source: new ol.source.TileWMS({
+            url: 'https://ahocevar.com/geoserver/wms',
+            params: {
+              'LAYERS': 'ne:NE1_HR_LC_SR_W_DR',
+              'TILED': true
+            }
+          })
+        })
+      ];
+
+var layerOSM =  [
+    new ol.layer.Tile({
+      source: new ol.source.OSM()
+    })
+  ];
+
+var map = new ol.Map({
+  target: 'map',
+  layers: layerOSM,
+  view: new ol.View({    
+    center: ol.proj.fromLonLat([2,46]),
+    zoom: 5
+  })
+});
+
+map.addLayer(vectorLayer);
+</script>
+
+{% endblock body_js %}
