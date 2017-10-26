@@ -22,13 +22,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 't21etvwc@m3165@n$e*+@mr&4fd+y7=^j&kzgemjzhfd=8-0qf'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -151,9 +144,7 @@ INSTALLED_APPS = (
     'djangocms_googlemap',
     'djangocms_video',
     'lampesCMS',
-    #'galerie',
     'galerie_cms_integration',
-    'debug_toolbar',
 
 )
 
