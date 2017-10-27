@@ -17,7 +17,7 @@ sudo apt-get install python3.5 python-dev libpq-dev
 
 créer un fichier .gitignore avec dedans
 ~~~
-lampesCMS/settings/*
+lampesCMS/setting
 lampesCMS/static
 ~~~
 
