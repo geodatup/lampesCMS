@@ -31,7 +31,7 @@ class Localisation(models.Model):
 				pass
 			else:
 				print (address, result)
-				point = "POINT(%s %s)" % (result.longitude, result.latitude)
+				point = GEOSGeometry('POINT(%s %s)' % (result.longitude, result.latitude))
 				resultAddress = result.address
 				self.geolocalisation = geos.fromstr(point)
 				self.geocodeAdresse = resultAddress
