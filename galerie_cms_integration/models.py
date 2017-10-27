@@ -7,7 +7,7 @@ from geopy.geocoders import GoogleV3
 from django.contrib.gis.db import models
 from urllib.error import URLError
 from django.contrib.gis import geos
-
+from django.contrib.gis.geos import GEOSGeometry
 
 
 
