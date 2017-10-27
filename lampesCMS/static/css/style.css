@@ -38,7 +38,7 @@ a:hover{
 }
 
 .top-section  {
-    background-image: url(http://localhost:8000/media/filer_public/1b/bf/1bbf1a2b-c028-48bf-bc70-9a994bfde9cb/dsc02602.jpg);
+    background-image: url(../../media/filer_public/1b/bf/1bbf1a2b-c028-48bf-bc70-9a994bfde9cb/dsc02602.jpg);
     height: 100vh;
     background-size: cover;
     display: flex;

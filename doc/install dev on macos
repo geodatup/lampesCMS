@@ -16,3 +16,13 @@ django.contrib.gis.geos.error.GEOSException: Could not parse version info string
 try:
 
 brew install spatialite-tools
+
+
+
+
+ImportError: This package should not be accessible on Python 3. Either you are trying to run from the python-future src folder or your installation of python-future is corrupted.
+
+use export PYTHONPATH=
+
+
+export DJANGO_SETTINGS_MODULE=lampesCMS.settings.local
