@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.gis import admin
 
 # Register your models here.
-from .models import Lampe, LampeImage, Groupe, Localisation
+from .models import Lampe, LampeImage, Groupe, Localisation, Loc
 
 
 
@@ -31,5 +31,6 @@ class LampeAdmin(admin.ModelAdmin):
 admin.site.register(Lampe, LampeAdmin)
 admin.site.register(Groupe)
 admin.site.register(Localisation, admin.OSMGeoAdmin)
+admin.site.register(Loc, admin.OSMGeoAdmin)
 
 

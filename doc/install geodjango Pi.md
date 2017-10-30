@@ -18,6 +18,10 @@ create container and run
 
 add geodjango dependencies
 ~~~
+echo "for gdal:"
 sudo apt-get install binutils libproj-dev gdal-bin
 ~~
 
+building geos-3.6.2
+
+export LD_LIBRARY_PATH=/usr/local/lib

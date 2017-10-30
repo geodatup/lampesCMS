@@ -7,7 +7,7 @@ from geopy.geocoders import GoogleV3
 from django.contrib.gis.db import models
 from urllib.error import URLError
 from django.contrib.gis import geos
-from django.contrib.gis.geos import GEOSGeometry
+from django.contrib.gis.geos import GEOSGeometry, Point
 
 
 
@@ -30,18 +30,20 @@ class Localisation(models.Model):
 			except (URLError, ValueError):				
 				pass
 			else:
-				print (address, result)
-				point = GEOSGeometry('POINT(%s %s)' % (result.longitude, result.latitude))
+				#print (address, result)
+				self.geolocalisation = GEOSGeometry('POINT(%s %s)' % (result.longitude, result.latitude)).ewkt				
 				resultAddress = result.address
-				self.geolocalisation = geos.fromstr(point)
 				self.geocodeAdresse = resultAddress
 		super(Localisation, self).save()
+
+class Loc(models.Model):
+	geolocalisation = models.PointField(srid=4326, blank=True, null=True)
+
 
 
 class Groupe(models.Model):
 	nom = models.CharField(max_length=30)
 	description = HTMLField(blank=True, null=True)
-
 	def __str__(self):
 		return self.nom
 
