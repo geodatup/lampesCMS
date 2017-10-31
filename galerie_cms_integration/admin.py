@@ -30,7 +30,7 @@ class LampeAdmin(admin.ModelAdmin):
 
 admin.site.register(Lampe, LampeAdmin)
 admin.site.register(Groupe)
-admin.site.register(Localisation, admin.OSMGeoAdmin)
-admin.site.register(Loc, admin.OSMGeoAdmin)
+admin.site.register(Localisation, admin.GeoAdmin)
+admin.site.register(Loc, admin.GeoAdmin)
 
 
