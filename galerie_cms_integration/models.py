@@ -39,7 +39,6 @@ class Loc(models.Model):
 	geolocalisation = models.PointField(srid=4326, blank=True, null=True)
 
 
-
 class Groupe(models.Model):
 	nom = models.CharField(max_length=30)
 	description = HTMLField(blank=True, null=True)
